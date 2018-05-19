@@ -1,7 +1,10 @@
 package command
 
 import (
+	"fmt"
 	"strings"
+
+	"github.com/jinzhu/gorm"
 )
 
 type AddCommand struct {
@@ -9,7 +12,20 @@ type AddCommand struct {
 }
 
 func (c *AddCommand) Run(args []string) int {
-	// Write your code here
+	title := strings.Join(args, "")
+	fmt.Println("added new task :", title)
+
+	db, err := gorm.Open("sqlite3", dbPath())
+	if err != nil {
+		return 1
+	}
+	defer db.Close()
+
+	db.Create(&Todo{Title: title, IsDone: 0})
+
+	if err != nil {
+		return 1
+	}
 	return 0
 }
 

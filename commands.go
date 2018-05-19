@@ -7,8 +7,23 @@ import (
 
 func Commands(meta *command.Meta) map[string]cli.CommandFactory {
 	return map[string]cli.CommandFactory{
+		"init": func() (cli.Command, error) {
+			return &command.InitCommand{
+				Meta: *meta,
+			}, nil
+		},
 		"add": func() (cli.Command, error) {
 			return &command.AddCommand{
+				Meta: *meta,
+			}, nil
+		},
+		"done": func() (cli.Command, error) {
+			return &command.DoneCommand{
+				Meta: *meta,
+			}, nil
+		},
+		"undone": func() (cli.Command, error) {
+			return &command.UnDoneCommand{
 				Meta: *meta,
 			}, nil
 		},
